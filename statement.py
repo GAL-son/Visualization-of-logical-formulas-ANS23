@@ -50,13 +50,3 @@ class Statement:
                         # print(self.supplementary + " added")
                         self.supplementary = ''
 
-
-test = Statement("-1 -2 3 4 0 -1 -2 3 4 0 3 4 -5 -6 0 1 7 8 -9 0 1 2 3 -4 0 10 -10 0")
-print("whole statement: " + test.DIMACS)
-
-for i in test.clauses:
-    print(i)
-
-print(test.variables_already_existing)
-for i in test.variables:
-    print(i)
