@@ -2,6 +2,10 @@ class Variable:
     def __init__(self,name_,clause_):
         self.name=name_
         self.clausulesUsing=[clause_]
+
+    def __init__(self,name_):
+        self.name=name_
+        self.clausulesUsing = []
     def appendClause(self,clause_):
        self.clausulesUsing.append(clause_)
     def __str__(self):
