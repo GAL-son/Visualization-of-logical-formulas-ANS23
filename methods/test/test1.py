@@ -23,7 +23,7 @@ def methodTest1(statement):
                     break
     
                     
-    g = ig.Graph(n=vert_num, edges=connections)
+    g = ig.Graph(n=vert_num, edges=connections)   
     fig, ax = plt.subplots()
     ig.plot(g, target=ax)
 
