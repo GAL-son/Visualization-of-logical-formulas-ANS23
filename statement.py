@@ -8,45 +8,39 @@ class Statement:
         self.clauses = []
         self.variables = []
         self.counter = 1
-        self.supplementary = ''
         self.clause_supplementary = []
         self.variables_already_existing = []
         self.DIMACS = DIMACS
         self.zeroNumFlag = 0
 
-        for sign in DIMACS:
-            # print(sign)
-            if sign == '0':
-                if self.zeroNumFlag == 0:
-                    # print(["sent"]+self.clause_supplementary)
-                    self.clauses.append(clause.Clause(self.clause_supplementary, ("C" + str(self.counter))))
+        self.lastVariable=0
 
-                    self.clause_supplementary = []
-                    self.counter += 1
-                if self.zeroNumFlag ==1:
-                    self.supplementary += sign
-                    self.zeroNumFlag = 1
 
-            # print("znaleziono 0")
+
+
+        numericalDimacs=[int(s) for s in DIMACS.split() if s.isdigit() or  s[0] =='-' ]
+
+        for i in numericalDimacs:
+            if abs(i)>self.lastVariable:
+                self.lastVariable=abs(i)
+                #print(self.lastVariable)
+
+        for i in range(1,self.lastVariable+1):
+            self.variables.append(variables.Variable("C" + str(i)))
+
+        for number in numericalDimacs:
+            #print(number)
+            if number == 0:
+                # print(["sent"]+self.clause_supplementary)
+                self.clauses.append(clause.Clause(self.clause_supplementary, ("C" + str(self.counter))))
+                self.clause_supplementary = []
+                self.counter += 1
+                # print("znaleziono 0")
             else:
-                if sign in ['1', '2', '3', '4', '5', '6', '7', '8', '9', '-']:
-                    self.supplementary += sign
-                    self.zeroNumFlag = 1
-                    # print("znaleziono cyfre lub -")
-                else:
-                    if sign == ' ':
-                        self.zeroNumFlag = 0
-                        if self.supplementary != '':
-                            self.clause_supplementary.append(self.supplementary)
-                            modlal = abs(int(self.supplementary))
-                            if modlal not in self.variables_already_existing:
-                                self.variables_already_existing += [modlal]
-                                self.variables.append(variables.Variable(modlal, ("C" + str(self.counter))))
-                            else:
-                                for i in self.variables:
-                                    if i.name == modlal:
-                                        i.appendClause(("C" + str(self.counter)))
-                        # print(self.clause_supplementary + [" status"])
-                        # print(self.supplementary + " added")
-                        self.supplementary = ''
+                self.clause_supplementary.append(number)
+                modlal = abs(number)
+                #print("accesing index:" + str(modlal))
+                self.variables[modlal-1].appendClause("C" + str(self.counter))
+
+
 
