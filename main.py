@@ -9,7 +9,9 @@ def main():
     path = "data/test-cnf.cnf"
     path2 = "asset/test1.cnf"
     path3 = "asset/testshort.cnf"
-    file = read_dimcas_file(path3)
+    path4 = "asset/selfTest.cnf"
+    path5 = "data/very-hard/sat/Analiza1-gss-25-s100.cnf"
+    file = read_dimcas_file(path4)
     test = Statement(file)   
 
     methodTest1(test)
