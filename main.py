@@ -1,8 +1,11 @@
-from utils import read_dimcas_file
+import utils as ut
 from statement import Statement
 
 
 from methods.test.test1 import methodTest1
+from methods.test.test2 import test2
+from methods.graph_reduction import resolution_graph_reduction
+from methods.resolution_graph import resolution_graph_no_index
 
 def main():
     # Test reading from file
@@ -10,11 +13,16 @@ def main():
     path2 = "asset/test1.cnf"
     path3 = "asset/testshort.cnf"
     path4 = "asset/selfTest.cnf"
-    path5 = "data/very-hard/sat/Analiza1-gss-25-s100.cnf"
-    file = read_dimcas_file(path4)
+    path5 = "data/medium/unsat/Analiza4-aaai10-planning-ipc5-pathways-17-step20.cnf"
+    path6 = "asset/testChain.cnf"
+    path7 = "asset/graph-red-test.cnf"
+    file = ut.read_dimcas_file(path7)
     test = Statement(file)   
 
-    methodTest1(test)
+    # methodTest1(test)
+    # test2(test) 
+    print(ut.graph_to_JSON(resolution_graph_reduction(test)))
+    print(ut.graph_to_JSON(resolution_graph_no_index(test)))
 
     return
 
