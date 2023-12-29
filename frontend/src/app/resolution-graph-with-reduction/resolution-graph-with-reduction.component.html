@@ -1,0 +1,23 @@
+<div>
+    <h3>Resolution Graph With Reduction</h3>
+
+    <br>
+    <form action="">
+        <label for="cnf-file-input">CNF File</label><br/>
+      <input id="cnf-file-input" type="file" class="cnf-file-input" (change)="onChange($event)" #fileUpload />
+        <br>
+      <button type="button" (click)="generateReducedResolutionGraph()">Generuj</button>
+    </form>
+    <canvas>
+    </canvas>
+<!--  layout do zmiany-->
+<ngx-graph
+  class="{chart-container}"
+  layout="d3ForceDirected"
+  [view]="[this.width ,this.height]"
+  [showMiniMap]="true"
+  [links]=this.links
+  [nodes]= this.nodes>>
+
+</ngx-graph>
+</div>

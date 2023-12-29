@@ -1,7 +1,5 @@
-import utils
 import utils as ut
 from statement import Statement
-
 
 from methods.test.test1 import methodTest1
 from methods.test.test2 import test2
@@ -24,12 +22,6 @@ def main():
     # test2(test) 
     print(ut.graph_to_JSON(resolution_graph_reduction(test)))
     print(ut.graph_to_JSON(resolution_graph_no_index(test)))
-
-    test.int()
-
-    # utils.argument_to_file("witam_to_Test2")
-    # utils.argument_to_file_name_specified("witam_to_Test","testFileName"
-
 
     return
 
