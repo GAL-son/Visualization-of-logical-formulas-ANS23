@@ -161,3 +161,6 @@ cython_debug/
 
 # Test Data
 data/
+
+# Frontend Node
+frontend/node_modules

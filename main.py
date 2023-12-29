@@ -1,7 +1,6 @@
 import utils as ut
 from statement import Statement
 
-
 from methods.test.test1 import methodTest1
 from methods.test.test2 import test2
 from methods.graph_reduction import resolution_graph_reduction

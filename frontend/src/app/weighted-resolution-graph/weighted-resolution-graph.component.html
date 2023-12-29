@@ -1,0 +1,15 @@
+<div>
+    <h3>Weighter Resolution Graph</h3>
+
+    <br>
+    <form action="">
+        <label for="cnf-file-input">Graph File</label><br/>
+        <input type="file" class="file-input" (change)="onChange($event)" #fileUpload />
+        <br>
+        <button type="button" (click)="generateWeightedResolutionGraph()">Generuj</button>
+    </form>
+    <p>{{info}}</p>
+    <canvas>
+        
+    </canvas>
+</div>
