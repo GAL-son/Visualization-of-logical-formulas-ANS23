@@ -17,6 +17,8 @@ def main():
     for i in test.variables:
         print(i)
 
+    test.int()
+
     return
 
 main()
