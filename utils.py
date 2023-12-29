@@ -33,3 +33,14 @@ def graph_drop_index(graph):
         del node["index"]
 
     return graph
+
+# tested,works creates file with no extention in data dictiuonary, argument_file file,if file exists it will overwtire,
+def argument_to_file(argument):
+    f = open("data/argument_file", "w")
+    f.write(argument)
+    f.close()
+#same, can specify file name
+def argument_to_file_name_specified(argument,filename):
+    f = open("data/"+filename, "w")
+    f.write(argument)
+    f.close()

@@ -12,7 +12,7 @@ class Statement:
         self.variables_already_existing = []
         self.DIMACS = DIMACS
         self.zeroNumFlag = 0
-
+        self.Connections=[]
         self.lastVariable=0
 
 
@@ -35,12 +35,26 @@ class Statement:
                 self.clauses.append(clause.Clause(self.clause_supplementary, ("C" + str(self.counter))))
                 self.clause_supplementary = []
                 self.counter += 1
-                # print("znaleziono 0")
+                #print("znaleziono 0")
             else:
                 self.clause_supplementary.append(number)
                 modlal = abs(number)
                 #print("accesing index:" + str(modlal))
                 self.variables[modlal-1].appendClause("C" + str(self.counter))
+    def int(self):
+        print("kszz")
+        for i in self.clauses:
+            #print(i)
+            for n in self.clauses:
+                if i.name!=n.name:
+                    print(n.variables)
+                   # print("aaa")
+                    intesrection=list(set(i.variables).intersection(n.variables))
+                    print(str(i.name)+"connects with "+str(n.name)+"by variables: "+ str(intesrection))
+
+        print("kszz")
+
+
 
 
 

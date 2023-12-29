@@ -21,6 +21,7 @@
     "@angular/platform-browser": "17.0.0",
     "@angular/platform-browser-dynamic": "17.0.0",
     "@angular/router": "17.0.0",
+    "@swimlane/ngx-graph": "^8.2.3",
     "angular-in-memory-web-api": "~0.16.0",
     "child_process": "^1.0.2",
     "process": "^0.11.10",

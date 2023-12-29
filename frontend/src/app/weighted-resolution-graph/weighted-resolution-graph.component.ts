@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule, JsonPipe } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-
 // import { python } from 'pythonia'
 // import { ChildProcess } from 'child_process';
 
@@ -17,7 +16,7 @@ declare var require: any
 })
 export class WeightedResolutionGraphComponent {
   file: File | null = null; // Variable to store file 
-  graph: Object | null = null;
+  graph: Array<Object> | null = null;
   info: string = "Oczekiwanie na plik";
   method = "../../methods/resolution_graph.py"
 
@@ -26,70 +25,54 @@ export class WeightedResolutionGraphComponent {
 
     if (file) {
       this.file = file;
+      this.info = "Dodano";
     }
   }
 
-  async generateWeightedResolutionGraph() {
-    const text = ''
-    try {
+  getFormText() {
       // Get graph file data
-      const text = await this.file?.text();
-      this.info = "Dodano";
-      console.log(text)      
-    } catch (e) {
-      console.error(e)
-      this.info = "BŁĄD"
-      return
-    }
+      return this.file?.text().then(x => {
+        return x;
+      }
+      ).catch(e => {
+        console.error(e)
+        return e;
+      });
+  }
 
-    this.runPythonScript("../../pipeline.py", [text])
-
-    return
-   
+  parseGraphJson(text: string) {
     try {
-      console.log(JSON.parse(text));
+      // console.log(text);
       this.graph = JSON.parse(text);
     } catch(e) {
       console.error(e)
-      this.info = "BŁĄD"
-      return
+      this.info = "JSON ERROR"
     }
     console.log(this.graph)
-    console.info("TUTAJ")
   }
 
-  visualizeGraph(graph: Object) {
-
-  }
-
-  async getPythonGraph(text: string) {
+  async generateWeightedResolutionGraph() {
     
+    let formText: any = ""
 
+    try {
+      formText = await this.getFormText()
+    } catch(e) {
+      console.error(e)
+    }
+    // SEND TEXT TO SERVER
+    // console.log("TEXT" + formText)
+    this.parseGraphJson(formText);
+    this.visualizeGraph(this.graph)
+    
   }
 
-  runPythonScript(scriptPath: any, args: Array<any>) {
-    const { spawn } = require('child_process');
+  visualizeGraph(graph: Array<Object> | null) {
+    if (graph == null) return
 
-    // Use child_process.spawn method from 
-    // child_process module and assign it to variable
-    const pyProg = spawn('python', [scriptPath].concat(args));
-  
-    // Collect data from script and print to console
-    let data = '';
-    pyProg.stdout.on('data', (stdout: any) => {
-      data += stdout.toString();
-    });
-  
-    // Print errors to console, if any
-    pyProg.stderr.on('data', (stderr: any) => {
-      console.log(`stderr: ${stderr}`);
-    });
-  
-    // When script is finished, print collected data
-    pyProg.on('close', (code: any) => {
-      console.log(`child process exited with code ${code}`);
-      console.log(data);
-    });
+    this.info = "JES GEAPH"
+
+    // console.info(graph.toString())
   }
   
 }
