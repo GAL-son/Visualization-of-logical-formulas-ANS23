@@ -104,7 +104,8 @@ def add_node_to_group(node, group):
 
     # Remove edges that point to the group
     for index in group["index"]:
-        group["edges"].remove(index)
+        if index in group["edges"]:
+            group["edges"].remove(index)
     
     return group
 

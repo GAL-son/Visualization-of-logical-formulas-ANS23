@@ -25,6 +25,7 @@ def graph_to_JSON(graph):
     print(graph, file=output)
     json = output.getvalue()
     output.close()
+    json = json.replace("'", "\"")
 
     return json
 
