@@ -107,7 +107,7 @@ export class ResolutionGraphWithReductionComponent {
         let l = {
           id: parseInt((outindex+1).toString() + (index+1).toString()),
           source: (outindex + 1).toString(),
-          target: element + 1,
+          target: (element + 1).toString(),
           label: outindex.toString() + index.toString()
         }
         links_.push(l)
@@ -116,16 +116,20 @@ export class ResolutionGraphWithReductionComponent {
     });
 
 
-    console.log(links_)
+    console.log("Before filtering:", links_);
 
-    links_= links_.filter(
-      (value, index, self)=>
+    links_ = links_.filter(
+      (value, index, self) =>
         self.findIndex(
           (item) =>
             (item.target === value.target && item.source === value.source) ||
             (item.target === value.source && item.source === value.target)
         ) === index
-    )
+    );
+
+
+
+    console.log("After filtering:", links_);
 
     this.links=links_;
 
