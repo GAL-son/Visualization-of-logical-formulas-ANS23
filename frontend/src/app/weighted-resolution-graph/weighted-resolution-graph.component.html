@@ -10,17 +10,31 @@
     <button type="button" (click)="generateWeightedResolutionGraph()">Generuj</button>
   </form>
   <p>{{info}}</p>
-  <canvas>
-
-  </canvas>
   <!--    zmienic na inny layout w przyszlosci-->
   <ngx-graph
     class="{chart-container}"
     layout="d3ForceDirected"
-    [view]="[this.width ,this.height]"
     [showMiniMap]="true"
     [links]=this.links
-    [nodes]= this.nodes>
+    [nodes]= this.nodes
+    [animate] = "false"
+    [draggingEnabled]="false"
+    [zoomToFit$]="zoomToFit$"
+    >
 
+    <ng-template #nodeTemplate let-node>
+      <svg:g viewBox="0 0 1 1">
+      <svg:circle
+        [attr.r]="node.data.weight/2"
+        [attr.cx] = "node.data.weight/2"
+        [attr.cy] = "node.data.weight/2"
+        [attr.fill]="nodeColor"
+        stroke="black" stroke-width="1"
+      />
+      <!-- <svg:text alignment-baseline="central"  [attr.x]="node.data.weight / 2" [attr.y]="node.data.weight / 2">
+        {{node.label}}
+      </svg:text> -->
+    </svg:g>
+    </ng-template>
   </ngx-graph>
 </div>
