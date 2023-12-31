@@ -2,10 +2,24 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {GraphModule, NgxGraphModule} from "@swimlane/ngx-graph";
 
-declare var require: any
-interface  myObject{
-  name:String;
-  edges:Array<number>
+interface Node {
+  id: string,
+  label: string,
+  data: {
+    type: string
+    nodeColor: string
+  }
+}
+
+interface Link {
+  id: string,
+  source: string,
+  target: string
+}
+
+interface  myGraph{
+  nodes: Array<Node>,
+  links: Array<Link>  
 }
 
 
@@ -21,15 +35,16 @@ interface  myObject{
 
 export class ResolutionGraphWithReductionComponent {
   file: File | null = null; // Variable to store file
-  graph: myObject[] | null = null;
+  graph: myGraph | null = null;
   info: string = "Oczekiwanie na plik";
   width: number = 1;
   height : number = 1;
-  nodes: Array<any>= [
-    ]
-  links: Array<any>=[
-  ]
-  method = "../../methods/graph_reduction.py"//to change?
+
+  nodeColor = "red";
+  groupColor = "orange"
+  nodes: Array<any>= []
+  links: Array<any>=[]
+  // method = "../../methods/graph_reduction.py"//to change?
 
   onChange(event: any) {
     const file: File = event.target.files[0];
@@ -80,59 +95,49 @@ export class ResolutionGraphWithReductionComponent {
 
   }
 
+  visualizeGraph(graph: myGraph | null) {
+    this.info = "Visualization in progress..."
+    if (graph == null){
+      this.info = "ERROR - NO GRAPH PROVIDED"
+      return
+    }
+    // console.log(graph)
+    // console.log(graph.links)
 
 
-  visualizeGraph(graph: myObject[] | null) {
-    if (graph == null) return;
+    // let nodeWeights = new Array<number>(graph.nodes.length)
 
-    this.info = "JES GRAPH";
-    this.nodes = [];
-    this.links = [];
-    let links_:Array<any>=[];
+    // graph["nodes"].forEach((node, index) => {
+    //   nodeWeights[index] = node.data.weight
+    // });
 
+    // // nodeWeights = this.normalizeArray(nodeWeights, this.maxnodeWidth, this.minNodeWith)
+    
 
-    graph.forEach((element, index) => {
-      let o = {
-        id: (index+1),
-        label: element.name
-      };
-      console.log("Element at index", index, ":", element);
-      this.nodes.push(o);
+    graph["nodes"].forEach((node, index) => {
+      let type = node.data.type
+
+      if( type == 'group') {
+        node.data.nodeColor = this.groupColor
+      } else {
+        node.data.nodeColor = this.nodeColor
+      }
     });
+    // console.log("WEIGHTS RECALCULATED")
 
+    if( this.graph?.nodes !== undefined) {
+      this.nodes = this.graph?.nodes;  
+    }    
+    console.log("Nodes appended")
+    console.log(this.nodes)
 
-    graph.forEach((element, outindex) => {
+    if( this.graph?.links !== undefined) {
+      this.links = this.graph?.links;  
+      // console.log(this.links)
+    }
+    console.log("Links recalculated")
 
-      element.edges.forEach((element, index) => {
-        let l = {
-          id: parseInt((outindex+1).toString() + (index+1).toString()),
-          source: (outindex + 1).toString(),
-          target: element + 1,
-          label: outindex.toString() + index.toString()
-        }
-        links_.push(l)
-      })
-
-    });
-
-
-    console.log(links_)
-
-    links_= links_.filter(
-      (value, index, self)=>
-        self.findIndex(
-          (item) =>
-            (item.target === value.target && item.source === value.source) ||
-            (item.target === value.source && item.source === value.target)
-        ) === index
-    )
-
-    this.links=links_;
-
-
-    console.log("number of connections:",this.links.length)
-
-    console.log("finally", this.nodes);
+    this.info = "Awaiting NGX GRAPH"
   }
 
 
