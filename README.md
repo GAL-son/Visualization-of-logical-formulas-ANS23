@@ -4,7 +4,7 @@
 
 ## Usage
 
-> **_NOTE:_**  ***For demonstration purposes***
+> **_WARNING:_**  ***For demonstration purposes***
 
 ### Requirements
 
