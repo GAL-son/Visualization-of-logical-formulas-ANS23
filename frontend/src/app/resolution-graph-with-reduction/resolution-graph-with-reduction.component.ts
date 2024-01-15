@@ -37,7 +37,7 @@ interface  myGraph{
 export class ResolutionGraphWithReductionComponent {
   file: File | null = null; // Variable to store file
   graph: myGraph | null = null;
-  info: string = "Oczekiwanie na plik";
+  info: string = "Awaiting file...";
   width: number = 1;
   height : number = 1;
 
@@ -55,7 +55,7 @@ export class ResolutionGraphWithReductionComponent {
 
     if (file) {
       this.file = file;
-      this.info = "Dodano";
+      this.info = "File added...";
     }
   }
 

@@ -35,7 +35,7 @@ interface  myGraph{
 export class WeightedResolutionGraphComponent {
   file: File | null = null; // Variable to store file
   graph: myGraph | null = null;
-  info: string = "Awaiting the file";
+  info: string = "Awaiting file...";
   width: number = 500;
   height : number = 50;
   maxnodeWidth: number = 55;
@@ -57,7 +57,7 @@ export class WeightedResolutionGraphComponent {
 
     if (file) {
       this.file = file;
-      this.info = "Dodano";
+      this.info = "File added...";
     }
   }
 
