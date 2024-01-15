@@ -3,10 +3,34 @@
 
     <br>
     <form action="">
-      <label for="cnf-file-input">Graph File</label><br/>
-      <input id="cnf-file-input" type="file" class="cnf-file-input" (change)="onChange($event)" #fileUpload />
-  
-      <br>
+      <div style="display: flex; flex-direction: row; align-items: left; justify-content: left;">
+        <div>
+          <label for="cnf-file-input">Graph File</label><br/>
+          <input id="cnf-file-input" type="file" class="cnf-file-input" (change)="onChange($event)" #fileUpload />
+        </div>
+        <div style="margin-right: 10px;">
+          <label for="labels-bool" >Labels</label><br/>
+          <input id="labels-bool" type="checkbox" class="cnf-file-input" (change)="handleLabels($event)" #fileUpload />
+        </div>
+        <div>
+          <div style="margin-right: 10px;">
+            <label for="max-node-size">Node size</label><br/>
+            <input id="max-node-size" type="number" [value]="this.nodewidth" (change)="handleSize($event)" #fileUpload /><br/>
+          </div>
+        </div>
+        <div>
+          <div style="margin-right: 10px;">
+            <label for="labels-bool" >Node Color</label><br/>
+            <input id="labels-bool" type="color" class="cnf-file-input" (change)="handleColor($event)" [value]="nodeColor"/>
+          </div>
+          <div style="margin-right: 10px;">
+            <label for="labels-bool" >Group Color</label><br/>
+            <input id="labels-bool" type="color" class="cnf-file-input" (change)="handleColorGroup($event)"[value]="groupColor" />
+          </div>
+        </div>
+       </div>
+    
+        <br>
       <button type="button" (click)="generateReducedResolutionGraph()">Generuj</button>
     </form>
     <p>{{info}}</p>
@@ -18,21 +42,21 @@
       [links]=this.links
       [nodes]= this.nodes
       [animate] = "false"
-      [draggingEnabled]="true"
+      [draggingEnabled]="false"
       >
   
       <ng-template #nodeTemplate let-node>
         <svg:g viewBox="0 0 1 1"  [attr.class]="node.data.customColor">
         <svg:circle
-          [attr.r]="10"
-          [attr.cx] = "15"
-          [attr.cy] = "15"
+          [attr.r]="node.data.wid/2"
+          [attr.cx] = "node.data.wid/2"
+          [attr.cy] = "node.data.wid/2"
           [attr.fill]="node.data.nodeColor"
           stroke="black" stroke-width="1"
         />
-        <!-- <svg:text alignment-baseline="central"  [attr.x]="node.data.weight / 2" [attr.y]="node.data.weight / 2">
-          {{node.label}}
-        </svg:text> -->
+        <svg:text *ngIf="this.labels" alignment-baseline="center" text-anchor="middle" [attr.x]="node.data.wid/2" [attr.y]="node.data.wid*0.7" [attr.font-size] = "node.data.wid*0.5" >
+        {{node.label}}
+      </svg:text>
       </svg:g>
       </ng-template>
     </ngx-graph>

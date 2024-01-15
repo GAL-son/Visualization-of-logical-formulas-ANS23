@@ -2,9 +2,31 @@
   <h3>Weighter Resolution Graph</h3>
 
   <br>
-  <form action="">
-    <label for="cnf-file-input">Graph File</label><br/>
-    <input id="cnf-file-input" type="file" class="cnf-file-input" (change)="onChange($event)" #fileUpload />
+  <form action="" >
+   <div style="display: flex; flex-direction: row; align-items: left; justify-content: left;">
+    <div>
+      <label for="cnf-file-input">Graph File</label><br/>
+      <input id="cnf-file-input" type="file" class="cnf-file-input" (change)="onChange($event)" #fileUpload />
+    </div>
+    <div style="margin-right: 10px;">
+      <label for="labels-bool" >Labels</label><br/>
+      <input id="labels-bool" type="checkbox" class="cnf-file-input" (change)="handleLabels($event)" #fileUpload />
+    </div>
+    <div>
+      <div style="margin-right: 10px;">
+        <label for="max-node-size">Max node size</label><br/>
+        <input id="max-node-size" type="number" [value]="this.maxnodeWidth" (change)="handleMaxSize($event)" #fileUpload /><br/>
+      </div>
+      <div>
+        <label for="max-node-size">Min node size</label><br/>
+        <input id="max-node-size" type="number" [value]="this.minNodeWith" (change)="handleMinSize($event)" #fileUpload /><br/>
+      </div>
+    </div>
+    <div style="margin-right: 10px;">
+      <label for="labels-bool" >Node Color</label><br/>
+      <input id="labels-bool" type="color" class="cnf-file-input" (change)="handleColor($event)" [value]="nodeColor" />
+    </div>
+   </div>
 
     <br>
     <button type="button" (click)="generateWeightedResolutionGraph()">Generuj</button>
@@ -23,7 +45,7 @@
     >
 
     <ng-template #nodeTemplate let-node>
-      <svg:g viewBox="0 0 1 1">
+      <svg:g width="54px" height="54px" viewBox="0 0 54 54">
       <svg:circle
         [attr.r]="node.data.weight/2"
         [attr.cx] = "node.data.weight/2"
@@ -31,9 +53,9 @@
         [attr.fill]="nodeColor"
         stroke="black" stroke-width="1"
       />
-      <!-- <svg:text alignment-baseline="central"  [attr.x]="node.data.weight / 2" [attr.y]="node.data.weight / 2">
+      <svg:text *ngIf="this.labels" alignment-baseline="center" text-anchor="middle" [attr.x]="node.data.weight/2" [attr.y]="node.data.weight * 0.6" [attr.font-size] = "node.data.weight/2" [attr.text-length] = "node.data.weight/2">
         {{node.label}}
-      </svg:text> -->
+      </svg:text>
     </svg:g>
     </ng-template>
   </ngx-graph>

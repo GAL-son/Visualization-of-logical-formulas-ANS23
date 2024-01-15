@@ -7,6 +7,7 @@ interface Node {
   label: string,
   data: {
     type: string
+    wid: number
     nodeColor: string
   }
 }
@@ -40,8 +41,11 @@ export class ResolutionGraphWithReductionComponent {
   width: number = 1;
   height : number = 1;
 
-  nodeColor = "red";
-  groupColor = "orange"
+  labels: boolean = false;
+  nodewidth: number = 15;
+
+  nodeColor = "#ff0000";
+  groupColor = "#ff9900"
   nodes: Array<any>= []
   links: Array<any>=[]
   // method = "../../methods/graph_reduction.py"//to change?
@@ -53,6 +57,27 @@ export class ResolutionGraphWithReductionComponent {
       this.file = file;
       this.info = "Dodano";
     }
+  }
+
+  handleColor(event: any) {
+    const newVal = event.target.value;
+    this.nodeColor = newVal.toString()
+  }
+
+  handleColorGroup(event: any) {
+    const newVal = event.target.value;
+    this.groupColor = newVal.toString()
+  }
+
+  handleSize(event: any) {
+    const newVal = event.target.value;
+    console.log(newVal)
+    this.nodewidth = parseInt(newVal)
+  }
+
+  handleLabels(event: any) {
+    const newLab = event.target.checked;
+    this.labels = newLab;
   }
 
   getFormText() {
@@ -78,6 +103,8 @@ export class ResolutionGraphWithReductionComponent {
   }
 
   async generateReducedResolutionGraph() {
+    const labelsSett = this.labels
+    this.labels = false;
     this.width=2000;
     this.height=200;
 
@@ -92,7 +119,10 @@ export class ResolutionGraphWithReductionComponent {
     console.log("TEXT" + formText)
     this.parseGraphJson(formText);
     this.visualizeGraph(this.graph)
-
+    setTimeout(() => {
+      this.file = null;
+      this.labels = labelsSett
+    }, 1000)
   }
 
   visualizeGraph(graph: myGraph | null) {
@@ -116,6 +146,7 @@ export class ResolutionGraphWithReductionComponent {
 
     graph["nodes"].forEach((node, index) => {
       let type = node.data.type
+      node.data.wid = this.nodewidth
 
       if( type == 'group') {
         node.data.nodeColor = this.groupColor

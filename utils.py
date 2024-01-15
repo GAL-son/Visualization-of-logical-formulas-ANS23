@@ -1,4 +1,5 @@
 import io
+import os
 
 def read_dimcas_file(path):
     text = ""
@@ -42,6 +43,15 @@ def argument_to_file(argument):
     f.close()
 #same, can specify file name
 def argument_to_file_name_specified(argument,filename):
-    f = open("data/"+filename, "w")
+
+    dir_path = r'output/'
+    count = 0
+    # Iterate directory
+    for path in os.listdir(dir_path):
+        # check if current path is a file
+        if os.path.isfile(os.path.join(dir_path, path)):
+            count += 1
+
+    f = open(dir_path+filename + str(count//2) + '.json', "w")
     f.write(argument)
     f.close()

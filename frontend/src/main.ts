@@ -3,6 +3,7 @@
 *  Protractor is used in this example for compatibility with Angular documentation tools.
 */
 import { bootstrapApplication,provideProtractorTestingSupport } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app/app.component';
 
 bootstrapApplication(AppComponent,

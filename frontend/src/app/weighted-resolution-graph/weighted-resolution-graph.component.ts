@@ -38,10 +38,11 @@ export class WeightedResolutionGraphComponent {
   info: string = "Awaiting the file";
   width: number = 500;
   height : number = 50;
-  maxnodeWidth: number = 20;
-  minNodeWith: number = 5;
+  maxnodeWidth: number = 35;
+  minNodeWith: number = 15;
+  labels: boolean = false;
 
-  nodeColor = "red";
+  nodeColor = "#ff0000";
   nodes: Array<any>=[];
   links: Array<any>=[];
   
@@ -59,6 +60,29 @@ export class WeightedResolutionGraphComponent {
       this.info = "Dodano";
     }
   }
+
+  handleColor(event: any) {
+    const newVal = event.target.value;
+    this.nodeColor = newVal.toString()
+  }
+
+  handleMaxSize(event: any) {
+    const newVal = event.target.value;
+    console.log(newVal)
+    this.maxnodeWidth = parseInt(newVal)
+  }
+
+  handleMinSize(event: any) {
+    const newVal = event.target.value;
+    console.log(newVal)
+    this.minNodeWith = parseInt(newVal)
+  }
+
+  handleLabels(event: any) {
+    const newLab = event.target.checked;
+    this.labels = newLab;
+  }
+
   getFormText() {
       // Get graph file data
       return this.file?.text().then(x => {
@@ -79,11 +103,13 @@ export class WeightedResolutionGraphComponent {
       console.error(e)
       this.info = "JSON ERROR"
     }
-    this.info="JSON parsed"
+    this.info="JSON parsetext-lengthd"
     // console.log("graph paarsed\n"+this.graph)
   }
 
   async generateWeightedResolutionGraph() {
+    const labelsSett = this.labels
+    this.labels = false;
     this.info = "GENERATING..."
     let formText: any = ""
 
@@ -97,10 +123,13 @@ export class WeightedResolutionGraphComponent {
     this.parseGraphJson(formText);
     // console.info(this.graph)
     this.visualizeGraph(this.graph)
-
+    setTimeout(() => {
+      this.labels = labelsSett
+    }, 1000)
   }
 
   visualizeGraph(graph: myGraph | null) {
+    // console.log(graph)
     this.info = "Visualization in progress..."
     if (graph == null){
       this.info = "ERROR - NO GRAPH PROVIDED"
@@ -115,6 +144,8 @@ export class WeightedResolutionGraphComponent {
     graph["nodes"].forEach((node, index) => {
       nodeWeights[index] = node.data.weight
     });
+
+    console.log(nodeWeights)
 
     nodeWeights = this.normalizeArray(nodeWeights, this.maxnodeWidth, this.minNodeWith)
     
@@ -131,83 +162,28 @@ export class WeightedResolutionGraphComponent {
 
     if( this.graph?.links !== undefined) {
       this.links = this.graph?.links;  
-      // console.log(this.links)
+      // console.log(this.links) 
     }
     console.log("Links recalculated")
 
     this.info = "Awaiting NGX GRAPH"
-
-    // // Generate Nodes
-    // graph.forEach((element, index) => {
-    //   let o = {
-    //     id: (index+1),
-    //     label: element.name
-    //   };
-    //   // console.log("Element at index", index, ":", element);
-    //   this.nodes.push(o);
-    // });
-
-    // let nodeWeights : Array<number> = new Array<number>(this.nodes.length);
-
-    // // Generate Edges + weights
-    // graph.forEach((node, outindex) => {
-    //   nodeWeights[outindex] = node.edges.length;
-    //     node.edges.forEach((element, index) => {
-    //       let l = {
-    //         id: parseInt((outindex+1).toString() + (index+1).toString()),
-    //         source: (outindex + 1).toString(),
-    //         target: (element + 1).toString(),
-    //         label: outindex.toString() + index.toString()
-    //       }
-    //       links_.push(l)
-    //     })
-
-    // });
-    // // console.log(links_)
-
-    // let nodeSize = this.normalizeArray(nodeWeights, this.maxnodeWidth, this.minNodeWith)
-
-    // for (let i = 0; i < this.nodes.length; i++) {
-    //   this.nodes[i].data = {
-    //     weight: nodeWeights[i],
-    //   };
-
-    //   this.nodes[i].width = nodeSize[i];      
-    // }
-
-    // console.log(this.nodes)
-
-    // // Remove duplicate Edges
-    // links_= links_.filter(
-    //   (value, index, self)=>
-    //     self.findIndex(
-    //       (item) =>
-    //         (item.target === value.target && item.source === value.source) ||
-    //         (item.target === value.source && item.source === value.target)
-    //     ) === index
-    // )
-    // this.links=links_;
-    
-    // console.log(this.links)
-    // console.log("number of connections:",this.links.length)
-
-    // console.log("finally", this.nodes);
-
-    // Weight data
   }
 
-  normalizeArray(arr: Array<number>, maxVal: number, minVal:number ) {
+  normalizeArray(arr: Array<number>, maxVal: number, minVal: number ) {
+    console.info(maxVal)
+    console.info(minVal)
     let maxArr =  Math.max.apply(null, arr);
     let minArr =  Math.min.apply(null, arr);
 
-    // console.info(arr)
+    console.info(arr)
 
     arr.forEach((val, index) => {
+      console.log(val)
       val = ((val - minArr) / (maxArr - minArr)) * (maxVal - minVal) + minVal;
       arr[index] = Math.round(val * 100) / 100;
     });
 
-    // console.info(arr)
+    console.info(arr)
 
     return arr
   }
