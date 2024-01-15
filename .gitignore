@@ -166,3 +166,5 @@ data/
 frontend/node_modules
 
 output/*
+
+.idea/
