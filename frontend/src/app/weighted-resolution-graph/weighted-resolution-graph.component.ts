@@ -38,8 +38,8 @@ export class WeightedResolutionGraphComponent {
   info: string = "Awaiting the file";
   width: number = 500;
   height : number = 50;
-  maxnodeWidth: number = 35;
-  minNodeWith: number = 15;
+  maxnodeWidth: number = 55;
+  minNodeWith: number = 35;
   labels: boolean = false;
 
   nodeColor = "#ff0000";

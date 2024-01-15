@@ -42,7 +42,7 @@ export class ResolutionGraphWithReductionComponent {
   height : number = 1;
 
   labels: boolean = false;
-  nodewidth: number = 15;
+  nodewidth: number = 35;
 
   nodeColor = "#ff0000";
   groupColor = "#ff9900"
