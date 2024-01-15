@@ -166,5 +166,6 @@ data/
 frontend/node_modules
 
 output/*
+!output/.gitkeep
 
 .idea/
