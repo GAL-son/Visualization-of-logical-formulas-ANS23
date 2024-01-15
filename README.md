@@ -33,7 +33,7 @@ Next you can install required **node modules**. Head over to the `./frontend` di
 Type in terminall:
 
 ```
-    node install --force
+node install --force
 ```
 
 ### Runing appliaction
@@ -42,7 +42,7 @@ To run aplication you must first run the Angular server.
 In directory `./frontend` type:
 
 ```
-    ng serve
+ng serve
 ```
 
 and wait for server to start running. 
@@ -65,7 +65,7 @@ To visualize generated graphs you have input them into Angular app.
 
 Put them into their respective inputs:
 * `WEIGHTED_GRAPH{N}.json` -> *Weighted Resolution Graph* input 
-* `REDUCTION_GRAPH{N}.json` -> *Resolution Graph With Reduction*
+* `REDUCTION_GRAPH{N}.json` -> *Resolution Graph With Reduction* input
 
 And then pres button labeled *GENERATE*
 
