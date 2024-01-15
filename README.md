@@ -16,7 +16,7 @@
 
 ### Installing packages
 
-For **Python** part go to the project root directory (*referred as* `/`).
+For **Python** part go to the project root directory (*referred as* `./`).
 Next use pip and `requirements.txt` file to install required Python libraries
 
 ```
