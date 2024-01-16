@@ -52,6 +52,6 @@ def argument_to_file_name_specified(argument,filename):
         if os.path.isfile(os.path.join(dir_path, path)):
             count += 1
 
-    f = open(dir_path+filename + str(count//2) + '.json', "w")
+    f = open(dir_path+filename + str((count-1)//2) + '.json', "w")
     f.write(argument)
     f.close()
